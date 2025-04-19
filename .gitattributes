@@ -1,3 +1,8 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+
+# Đánh dấu thư mục demo là code chính, không phải code được vendor
 demo/* linguist-vendored=false
+demo/src/main/java/** linguist-language=Java
+*.java linguist-language=Java
+*.xml linguist-language=XML
