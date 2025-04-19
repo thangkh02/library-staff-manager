@@ -6,7 +6,7 @@
 
 - Thêm, sửa, xoá thông tin nhân viên thư viện
 - Thêm sửa xóa vai trò 
-- Tìm kiếm,sắp xếp , lọc theo tên, mã nhân viên, vai trò , lương ,độ tuổi 
+- Tìm kiếm,sắp xếp , lọc theo tên, mã nhân viên, vai trò , lương ,độ tuổi,.....
 - phân quyền chi tiết cho vai trò và quản lý nhân sự cho từng vai trò 
 
 ## 🛠️ Công nghệ sử dụng
