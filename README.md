@@ -28,19 +28,9 @@
 5. Chạy chương trình :
    ```bash
    mvn exec:java
-## Giao diện app : 
+
 ### Giao diện trang chủ : 
 ![image](https://github.com/user-attachments/assets/0a1573e7-fa9a-4feb-813e-aead1a267bc6)
-### Dialog để nhập thông tin thủ thư :
-![image](https://github.com/user-attachments/assets/d5a618cd-afbf-458f-a9e1-fe3b3dcceec2)
-### Giao diện quản lý vai trò: 
-![image](https://github.com/user-attachments/assets/2308d2d7-1ada-4d34-941f-cfef64c0333e)
-### Giao diện thêm vai trò mới :
-![image](https://github.com/user-attachments/assets/556ba560-f786-42e3-89b1-34aec57ba2e0)
-### Giao diện trang chi tiết vai trò : 
-![image](https://github.com/user-attachments/assets/28170ebc-2d5a-4bab-9b1d-db44233b752e)
-### Giao diện thêm thủ thư đảm nhiệm vai trò :
-![image](https://github.com/user-attachments/assets/7cebbf86-24f0-48fd-8a8c-fe94ec99fe52)
 
 
 
