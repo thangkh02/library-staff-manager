@@ -26,8 +26,8 @@
 -mvn clean install
 4. Chạy chương trình :
 -mvn exec:java
-## giao diện app 
-### giao diện trang chủ : 
+## Giao diện app : 
+### Giao diện trang chủ : 
 ![image](https://github.com/user-attachments/assets/0a1573e7-fa9a-4feb-813e-aead1a267bc6)
 ### Dialog để nhập thông tin thủ thư :
 ![image](https://github.com/user-attachments/assets/d5a618cd-afbf-458f-a9e1-fe3b3dcceec2)
