@@ -120,6 +120,9 @@ public class LibrarianModel {
                 roles.add(new Role(id, nameRole, description, createDate));
             }
 
+
+
+            
             rs.close();
             stmt.close();
 

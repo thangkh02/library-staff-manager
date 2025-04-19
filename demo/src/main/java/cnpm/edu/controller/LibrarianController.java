@@ -26,9 +26,8 @@ public class LibrarianController {
         updateView();
     }
 
-
     public void addLibrarian() {
-        
+
         LibrarianFormDialog dialog = new LibrarianFormDialog(view, new ArrayList<>(model.getRoles()), model);
         dialog.setVisible(true);
 
@@ -91,7 +90,6 @@ public class LibrarianController {
 
         System.out.println("Đã tìm thấy thủ thư: " + librarian.getFullName());
 
-     
         LibrarianFormDialog dialog = new LibrarianFormDialog(view, librarian, new ArrayList<>(model.getRoles()), model);
         dialog.setVisible(true);
 
@@ -368,44 +366,50 @@ public class LibrarianController {
             return;
         }
 
-        RoleFormDialog dialog = new RoleFormDialog(view, selectedRole);
-        dialog.setVisible(true);
+        boolean editingCompleted = false;
+        while (!editingCompleted) {
+            RoleFormDialog dialog = new RoleFormDialog(view, selectedRole);
+            dialog.setVisible(true);
 
-        if (dialog.isConfirmed()) {
-            String roleName = dialog.getRoleName();
-            String description = dialog.getRoleDescription();
-            List<Integer> permissionIds = dialog.getSelectedPermissionIds();
+            if (dialog.isConfirmed()) {
+                String roleName = dialog.getRoleName();
+                String description = dialog.getRoleDescription();
+                List<Integer> permissionIds = dialog.getSelectedPermissionIds();
 
-            // Kiểm tra trùng lặp tên vai trò ở đây
-            if (model.isRoleNameExists(roleName, roleId)) {
-                JOptionPane.showMessageDialog(view,
-                        "Tên vai trò này đã tồn tại trong hệ thống. Vui lòng chọn tên khác.",
-                        "Lỗi", JOptionPane.ERROR_MESSAGE);
-                // Mở lại dialog để người dùng có thể sửa tên
-                updateRole();
-                return;
-            }
-
-            // Cập nhật vai trò và quyền
-            boolean success = model.updateRole(roleId, roleName, description);
-            if (success) {
-                // Cập nhật quyền cho vai trò
-                boolean permissionsUpdated = model.updateRolePermissions(roleId, permissionIds);
-                if (permissionsUpdated) {
+                // Kiểm tra trùng lặp tên vai trò
+                if (!roleName.equals(selectedRole.getNameRole()) && model.isRoleNameExists(roleName, roleId)) {
                     JOptionPane.showMessageDialog(view,
-                            "Đã cập nhật vai trò thành công!",
-                            "Thành công", JOptionPane.INFORMATION_MESSAGE);
-                    updateView();
+                            "Tên vai trò \"" + roleName + "\" đã tồn tại trong hệ thống.\nVui lòng chọn tên khác.",
+                            "Lỗi - Tên vai trò trùng lặp", JOptionPane.ERROR_MESSAGE);
+                    // Tiếp tục vòng lặp để hiển thị lại dialog
+                    continue;
+                }
+
+                // Cập nhật vai trò và quyền
+                boolean success = model.updateRole(roleId, roleName, description);
+                if (success) {
+                    // Cập nhật quyền cho vai trò
+                    boolean permissionsUpdated = model.updateRolePermissions(roleId, permissionIds);
+                    if (permissionsUpdated) {
+                        JOptionPane.showMessageDialog(view,
+                                "Đã cập nhật vai trò thành công!",
+                                "Thành công", JOptionPane.INFORMATION_MESSAGE);
+                        updateView();
+                    } else {
+                        JOptionPane.showMessageDialog(view,
+                                "Cập nhật vai trò thành công nhưng không thể cập nhật quyền.\nHãy thử cập nhật quyền lại sau.",
+                                "Cảnh báo", JOptionPane.WARNING_MESSAGE);
+                        updateView();
+                    }
                 } else {
                     JOptionPane.showMessageDialog(view,
-                            "Cập nhật vai trò thành công nhưng không thể cập nhật quyền.",
-                            "Cảnh báo", JOptionPane.WARNING_MESSAGE);
-                    updateView();
+                            "Không thể cập nhật vai trò. Vui lòng thử lại.",
+                            "Lỗi", JOptionPane.ERROR_MESSAGE);
                 }
+                editingCompleted = true;
             } else {
-                JOptionPane.showMessageDialog(view,
-                        "Không thể cập nhật vai trò. Vui lòng thử lại.",
-                        "Lỗi", JOptionPane.ERROR_MESSAGE);
+                // Người dùng đã hủy
+                editingCompleted = true;
             }
         }
     }

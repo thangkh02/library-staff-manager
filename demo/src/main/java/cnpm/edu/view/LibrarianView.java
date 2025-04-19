@@ -49,7 +49,7 @@ public class LibrarianView extends JFrame {
     // Thêm thành phần cho quản lý vai trò - GIỮ LẠI MỘT PHIÊN BẢN DUY NHẤT
     private DefaultTableModel roleTableModel;
     private JTable roleTable;
-    private JButton addRoleButton, deleteRoleButton;
+    private JButton addRoleButton, deleteRoleButton, updateRoleButton; // Thêm updateRoleButton
 
     // Thêm các thành phần cho tab phân quyền
     private RolePermissionPanel rolePermissionPanel;
@@ -379,6 +379,7 @@ public class LibrarianView extends JFrame {
     
         addRoleButton.addActionListener(e -> controller.addRole());
         deleteRoleButton.addActionListener(e -> controller.deleteRole());
+        updateRoleButton.addActionListener(e -> controller.updateRole()); // Kết nối nút sửa vai trò với controller
 
 
         rolePermissionPanel.setController(controller);
@@ -642,7 +643,12 @@ public class LibrarianView extends JFrame {
         addRoleButton.setBackground(new Color(50, 205, 50));
         addRoleButton.setForeground(Color.WHITE);
 
-        deleteRoleButton = new JButton("Xóa");
+        // Thêm nút sửa vai trò
+        updateRoleButton = new JButton("Sửa vai trò");
+        updateRoleButton.setBackground(new Color(255, 165, 0)); // Màu cam
+        updateRoleButton.setForeground(Color.WHITE);
+
+        deleteRoleButton = new JButton("Xóa vai trò");
         deleteRoleButton.setBackground(new Color(255, 69, 0));
         deleteRoleButton.setForeground(Color.WHITE);
 
@@ -651,11 +657,15 @@ public class LibrarianView extends JFrame {
         gbc.gridy = 0;
         roleControlPanel.add(addRoleButton, gbc);
 
+        // Thêm nút sửa vai trò vào panel
         gbc.gridy = 1;
+        roleControlPanel.add(updateRoleButton, gbc);
+
+        gbc.gridy = 2;
         roleControlPanel.add(deleteRoleButton, gbc);
 
         // Thêm space để đẩy các nút lên trên
-        gbc.gridy = 2;
+        gbc.gridy = 3;
         gbc.weighty = 1.0;
         roleControlPanel.add(new JPanel(), gbc);
 

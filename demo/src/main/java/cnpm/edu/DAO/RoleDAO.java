@@ -141,4 +141,80 @@ public class RoleDAO {
             DbConfig.closeConnection(connection);
         }
     }
+
+    public boolean updateRolePermissions(int roleId, List<Integer> permissionIds) {
+        Connection connection = null;
+        try {
+            connection = DbConfig.getConnection();
+            connection.setAutoCommit(false);
+
+            // Xóa tất cả quyền hiện tại của vai trò
+            String deleteQuery = "DELETE FROM permission_role WHERE Roleid = ?";
+            PreparedStatement deleteStmt = connection.prepareStatement(deleteQuery);
+            deleteStmt.setInt(1, roleId);
+            deleteStmt.executeUpdate();
+            deleteStmt.close();
+
+            // Thêm các quyền mới
+            if (permissionIds != null && !permissionIds.isEmpty()) {
+                String insertQuery = "INSERT INTO permission_role (Permissionid, Roleid) VALUES (?, ?)";
+                PreparedStatement insertStmt = connection.prepareStatement(insertQuery);
+
+                for (Integer permissionId : permissionIds) {
+                    insertStmt.setInt(1, permissionId);
+                    insertStmt.setInt(2, roleId);
+                    insertStmt.addBatch();
+                }
+
+                insertStmt.executeBatch();
+                insertStmt.close();
+            }
+
+            connection.commit();
+            System.out.println("DEBUG: Đã cập nhật " + (permissionIds != null ? permissionIds.size() : 0) +
+                    " quyền cho vai trò " + roleId);
+            return true;
+        } catch (SQLException e) {
+            try {
+                if (connection != null)
+                    connection.rollback();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            System.err.println("Lỗi khi cập nhật quyền cho vai trò: " + e.getMessage());
+            e.printStackTrace();
+            return false;
+        } finally {
+            try {
+                if (connection != null)
+                    connection.setAutoCommit(true);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            DbConfig.closeConnection(connection);
+        }
+    }
+
+    public boolean isRoleNameExists(String roleName, int excludeId) {
+        Connection connection = null;
+        try {
+            connection = DbConfig.getConnection();
+            String query = "SELECT COUNT(*) FROM role WHERE nameRole = ? AND id != ?";
+            PreparedStatement stmt = connection.prepareStatement(query);
+            stmt.setString(1, roleName);
+            stmt.setInt(2, excludeId);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                return rs.getInt(1) > 0;
+            }
+            return false;
+        } catch (SQLException e) {
+            System.err.println("Lỗi khi kiểm tra tên vai trò tồn tại: " + e.getMessage());
+            e.printStackTrace();
+            return false;
+        } finally {
+            DbConfig.closeConnection(connection);
+        }
+    }
 }
