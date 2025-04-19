@@ -1,4 +1,4 @@
-# Library Staff Manager
+# 📚 Library Staff Management System
 
 Ứng dụng quản lý nhân sự thư viện viết bằng ngôn ngữ Java. Hệ thống hỗ trợ quản lý thông tin nhân viên, phân loại vai trò, phân quyền cho thủ thư trong thư viện.
 
