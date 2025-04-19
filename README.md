@@ -20,7 +20,7 @@
 1. Clone dự án về máy:
 
    ```bash
-   git clone https://github.com/ten-ban/library-staff-manager.git
+   git clone https://github.com/thangkh02/library-staff-manager.git
 2. Mở bằng IDE Java như IntelliJ IDEA hoặc Vscode
 3. Build dự án bằng Maven:
    ```bash
